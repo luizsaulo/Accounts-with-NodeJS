@@ -28,7 +28,7 @@ function operation() {
             } else if(action === 'Consultar Saldo'){
                 getAccountBalance()
             } else if(action === 'Sacar') {
-
+                withdraw()
             } else if(action === 'Sair') {
                 console.log(chalk.bgBlue.black('Obrigado por usar o Accounts!'))
                 process.exit()
@@ -191,4 +191,37 @@ function getAccountBalance () {
             operation()
     })
     .catch(err => console.log(err))
+}
+
+// withdraw an amount from user´s account
+function withdraw() {
+
+    inquirer.prompt([
+        {
+            name: 'accountName',
+            message: 'Qual o nome da sua conta?'
+        }
+    ]).then((answer) => {
+        const accountName = answer['accountName']
+
+        if (!checkAccount(accountName)) {
+            return withdraw()
+        }
+
+        inquirer.prompt([
+            {
+                name: 'amount',
+                message: 'Quanto você deseja sacar?'
+            }
+        ]).then((answer) => {
+
+            const amount = answer['amount']
+
+            console.log(amount)
+
+        }).catch(err => console.log(err))
+
+    })
+    .catch.err(err=> console.log(err))
+
 }
